@@ -1,0 +1,241 @@
+ <div class="pro-card">  
+                    <div class="img-placeholder">💉</div>  
+                    <h4>Oxitetraciclina LA</h4>  
+                    <p class="product-description">Antibiótico de ação prolongada – 3 dias de cobertura.</p>  
+                    <div style="color:var(--accent); font-weight:bold; font-size:1.2rem; margin:10px 0;">R$ 145,00</div>  
+                    <button class="btn-signup" onclick="addToCart('Oxitetraciclina LA', 145.00)">Adicionar ao Carrinho</button>  
+                </div>  
+            </div>  
+        </div>  
+
+        <div id="dosageAssistantView" class="content-section">  
+            <h2>Assistente de Dosagem</h2>  
+            <div style="margin-top:28px; background:white; padding:32px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.06); max-width:600px;">  
+                <label style="display:block; margin-bottom:8px; font-weight:600;">Tipo de Medicamento:</label>  
+                <select id="medType" style="width:100%; padding:12px; border:1px solid #ccc; border-radius:6px; margin-bottom:20px;">  
+                    <option value="0.2">Vermífugo (0.2 ml/kg)</option>  
+                    <option value="0.05">Vitamínico injetável (0.05 ml/kg)</option>  
+                    <option value="0.1">Antibiótico comum (0.1 ml/kg)</option>  
+                    <option value="0.025">Anti-inflamatório potente (0.025 ml/kg)</option>  
+                </select>  
+
+                <label style="display:block; margin-bottom:8px; font-weight:600;">Peso do Animal (kg):</label>  
+                <input type="number" id="animalWeight" placeholder="Ex: 450" min="1" style="width:100%; padding:12px; border:1px solid #ccc; border-radius:6px;">  
+
+                <button class="btn-submit" onclick="calculateDosage()">Calcular Dosagem</button>  
+
+                <div id="dosageResult"></div>  
+                <p style="font-size:0.8rem; color:#666; margin-top:16px; text-align:center;">  
+                    * Sempre confirme a dosagem com um médico-veterinário.  
+                </p>  
+            </div>  
+        </div>  
+
+        <div id="checkoutView" class="content-section">  
+            <h2>Finalizar Compra</h2>  
+            <div style="display:grid; grid-template-columns:1fr 380px; gap:32px; margin-top:28px;">  
+                <div style="background:white; padding:28px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.06);">  
+                    <h3>Forma de Pagamento</h3>  
+                    <div style="margin:24px 0;">  
+                        <label style="display:flex; align-items:center; padding:16px; border:1px solid #ddd; border-radius:8px; margin-bottom:12px; cursor:pointer;">  
+                            <input type="radio" name="payMethod" value="pix" checked style="margin-right:12px;">   
+                            <strong>PIX</strong> — pagamento imediato  
+                        </label>  
+                        <label style="display:flex; align-items:center; padding:16px; border:1px solid #ddd; border-radius:8px; cursor:pointer;">  
+                            <input type="radio" name="payMethod" value="card" style="margin-right:12px;">   
+                            <strong>Cartão de Crédito</strong> — até 12× sem juros  
+                        </label>  
+                    </div>  
+
+                    <div id="cardDetails" style="display:none; margin-top:24px; padding-top:20px; border-top:1px solid #eee;">  
+                        <input type="text" placeholder="Número do cartão" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:6px;">  
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">  
+                            <input type="text" placeholder="MM/AA" style="padding:12px; border:1px solid #ccc; border-radius:6px;">  
+                            <input type="text" placeholder="CVV" style="padding:12px; border:1px solid #ccc; border-radius:6px;">  
+                        </div>  
+                    </div>  
+                </div>  
+
+                <div style="background:#fdfaf5; padding:28px; border-radius:12px; border:2px dashed var(--secondary); align-self:start;">  
+                    <h3>Resumo do Pedido</h3>  
+                    <div id="checkoutSummary" style="margin:20px 0;"></div>  
+                    <hr style="border:none; border-top:1px solid #ddd; margin:16px 0;">  
+                    <p style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.3rem;">  
+                        Total: <span id="checkoutTotal">R$ 0,00</span>  
+                    </p>  
+                    <button class="btn-submit" onclick="confirmarPagamento()" style="margin-top:24px;">Confirmar Pagamento</button>  
+                </div>  
+            </div>  
+        </div>  
+    </main>  
+</div>  
+
+<!-- Carrinho lateral -->  
+<div id="cartDrawer" class="cart-drawer">  
+    <h2 style="margin-bottom:24px;">Seu Carrinho</h2>  
+    <div id="cartItems" style="flex-grow:1; overflow-y:auto; margin-bottom:20px;"></div>  
+    <div style="border-top:2px solid #eee; padding-top:20px;">  
+        <p style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; margin-bottom:16px;">  
+            Total: <span id="totalPrice">R$ 0,00</span>  
+        </p>  
+        <button class="btn-submit" onclick="irParaPagamento()">Finalizar Compra</button>  
+        <button onclick="toggleCart()" style="width:100%; margin-top:12px; background:none; border:1px solid #aaa; padding:10px; border-radius:6px; cursor:pointer;">Continuar Comprando</button>  
+    </div>  
+</div>
+
+</div>  <!-- Modais -->  <div id="loginModal" class="modal">  
+    <div class="modal-content">  
+    <span class="close" onclick="closeModal('loginModal')">×</span>
+        <input type="email" placeholder="E-mail" style="width:100%; padding:12px; margin:12px 0; border:1px solid #ccc; border-radius:6px;">  
+        <input type="password" placeholder="Senha" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ccc; border-radius:6px;">  
+        <button class="btn-submit" onclick="login()">Entrar</button>  
+    </div>  
+</div>  
+    <div id="registerModal" class="modal">  
+    <div class="modal-content">  
+        <span class="close" onclick="closeModal('registerModal')">×</span>  
+        <h2>Criar Nova Conta</h2>  
+
+        <input type="text" placeholder="Nome completo" style="width:100%; padding:12px; margin:12px 0; border:1px solid #ccc; border-radius:6px;">  
+
+        <input type="email" placeholder="E-mail" style="width:100%; padding:12px; margin-bottom:12px; border:1px solid #ccc; border-radius:6px;">  
+
+        <input type="password" placeholder="Senha" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ccc; border-radius:6px;">  
+
+        <button class="btn-submit" onclick="register()">Criar Conta</button>  
+    </div>  
+</div>
+
+<script>
+// ================= BANCO FAKE & ESTADO ===============
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+let cart = [];
+
+// ================= MODAIS =================
+function openModal(id) {
+    document.getElementById(id).style.display = "flex";
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+// ================= AUTENTICAÇÃO =================
+function register() {
+    const nome = document.querySelector("#registerModal input[type='text']").value;
+    const email = document.querySelector("#registerModal input[type='email']").value;
+    const senha = document.querySelector("#registerModal input[type='password']").value;
+
+    if (!nome || !email || !senha) return alert("Preencha todos os campos!");
+
+    usuarios.push({ nome, email, senha });
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    
+    alert("Conta criada com sucesso! Agora faça login.");
+    closeModal('registerModal');
+    openModal('loginModal');
+}
+
+function login() {
+    const email = document.querySelector("#loginModal input[type='email']").value;
+    const senha = document.querySelector("#loginModal input[type='password']").value;
+
+    const user = usuarios.find(u => u.email === email && u.senha === senha);
+
+    if (user) {
+        localStorage.setItem("usuarioAtual", JSON.stringify(user));
+        renderizarSessao();
+        closeModal('loginModal');
+    } else {
+        alert("E-mail ou senha incorretos!");
+    }
+}
+
+function logout() {
+    localStorage.removeItem("usuarioAtual");
+    location.reload();
+}
+
+function renderizarSessao() {
+    const user = JSON.parse(localStorage.getItem("usuarioAtual"));
+    if (user) {
+        document.getElementById("homeView").style.display = "none";
+        document.getElementById("dashView").style.display = "block";
+        document.getElementById("authBox").style.display = "none";
+        document.getElementById("userName").innerText = user.nome;
+    }
+}
+
+// ================= CARRINHO =================
+function addToCart(name, price) {
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({ name, price, qty: 1 });
+    }
+    updateCart();
+}
+
+function changeQty(index, delta) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) cart.splice(index, 1);
+    updateCart();
+}
+
+function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    const totalPrice = document.getElementById("totalPrice");
+    const cartCount = document.getElementById("cartCount");
+
+    cartItems.innerHTML = "";
+    let total = 0;
+    let count = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price * item.qty;
+        count += item.qty;
+        cartItems.innerHTML += `
+            <div style="margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:8px;">
+                <strong>${item.name}</strong><br>
+                R$ ${item.price.toFixed(2)} x ${item.qty}
+                <div style="margin-top:5px;">
+                    <button onclick="changeQty(${index}, -1)">-</button>
+                    <button onclick="changeQty(${index}, 1)">+</button>
+                </div>
+            </div>`;
+    });
+
+    totalPrice.innerText = "R$ " + total.toFixed(2);
+    cartCount.innerText = count;
+}
+
+function toggleCart() {
+    document.getElementById("cartDrawer").classList.toggle("active");
+}
+
+// ================= DOSAGEM (REAL-TIME) =================
+function calculateDosage() {
+    const weight = document.getElementById("animalWeight").value;
+    const factor = document.getElementById("medType").value;
+    const resultBox = document.getElementById("dosageResult");
+
+    if (!weight || weight <= 0) {
+        resultBox.innerText = "";
+        return;
+    }
+
+    const dose = weight * factor;
+    resultBox.innerText = "Dosagem recomendada: " + dose.toFixed(2) + " ml";
+}
+
+// ================= INICIALIZAÇÃO =================
+window.onload = function() {
+    renderizarSessao();
+    // Adiciona ouvintes para cálculo automático de dosagem
+    document.getElementById("animalWeight").addEventListener("input", calculateDosage);
+    document.getElementById("medType").addEventListener("change", calculateDosage);
+};
+</script>
+</body>
+</html>
