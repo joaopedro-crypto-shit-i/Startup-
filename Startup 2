@@ -1,0 +1,246 @@
+flex-direction: column;  
+    }  
+
+    .cart-drawer.active { right: 0; }  
+
+    .modal {  
+        display: none;  
+        position: fixed;  
+        z-index: 3000;  
+        left: 0;  
+        top: 0;  
+        width: 100%;  
+        height: 100%;  
+        background: rgba(0,0,0,0.75);  
+        align-items: center;  
+        justify-content: center;  
+    }  
+
+    .modal-content {  
+        background: #fdfaf5;  
+        margin: 20px;  
+        padding: 32px;  
+        width: 90%;  
+        max-width: 420px;  
+        border-radius: 12px;  
+        border-top: 10px solid var(--secondary);  
+        position: relative;  
+    }  
+
+    .close {  
+        position: absolute;  
+        right: 24px;  
+        top: 16px;  
+        font-size: 32px;  
+        cursor: pointer;  
+        color: #555;  
+    }  
+
+    .btn-submit {  
+        background: var(--accent);  
+        color: white;  
+        border: none;  
+        padding: 14px;  
+        width: 100%;  
+        cursor: pointer;  
+        font-weight: bold;  
+        border-radius: 6px;  
+        margin-top: 12px;  
+        font-size: 1.05rem;  
+    }  
+
+    #dosageResult {  
+        margin-top: 24px;  
+        padding: 16px;  
+        border: 1px solid #c8e6c9;  
+        border-radius: 8px;  
+        background-color: #e8f5e9;  
+        color: var(--accent);  
+        font-weight: bold;  
+        text-align: center;  
+    }  
+
+    /* Checkout */  
+    #checkoutSummary div {  
+        display: flex;  
+        justify-content: space-between;  
+        margin-bottom: 10px;  
+        padding-bottom: 8px;  
+        border-bottom: 1px solid #eee;  
+    }  
+
+    @media (max-width: 900px) {  
+        .wrapper { flex-direction: column; }  
+        .sidebar { width: 100%; padding: 16px; }  
+        .cart-drawer { width: 90%; right: -90%; }  
+    } 
+    /* ================= RESPONSIVO ================= */
+
+/* Tablets */
+@media (max-width: 900px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .nav-item {
+        flex: 1;
+        text-align: center;
+    }
+
+    .main-content {
+        padding: 16px;
+    }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+
+    header.top-bar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .hero {
+        height: 250px;
+        padding: 10px;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .container {
+        padding: 20px 10px;
+    }
+
+    .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+    .catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+    .user-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .cart-drawer {
+        width: 100%;
+        right: -100%;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+}
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: var(--secondary);
+    color: var(--primary);
+}
+</style>
+
+</head>  
+<body>  <header class="top-bar">  
+    <div class="logo" onclick="logout()">AgroVet Pro</div>  
+    
+    <div class="auth-buttons" id="authBox">  
+    <button class="btn-login" onclick="openModal('loginModal')">Entrar</button>
+      <button class="btn-signup" onclick="openModal('registerModal')">Criar Conta</button>
+    </div>  
+</header>  <div id="homeView">  
+    <section class="hero">  
+        <h1>Excelência em Saúde Animal</h1>  
+        <p style="margin:12px 0 24px; font-size:1.3rem;">Soluções completas para bovinos, equinos e suínos</p>  
+    </section>  
+    <div class="container">  
+        <h2>Destaques da Semana</h2>  
+        <div class="product-grid">  
+            <div class="product-card">  
+                <div style="font-size:5rem; margin-bottom:16px;">💉</div>  
+                <h3>Banamine</h3>  
+                <p style="color:var(--accent); font-weight:bold; font-size:1.4rem; margin:12px 0;">R$ 125,70</p>  
+                <button class="btn-signup" style="width:100%;" onclick="openModal('loginModal')">Ver detalhes</button>  
+            </div>  
+            <div class="product-card">  
+                <div style="font-size:5rem; margin-bottom:16px;">💊</div>  
+                <h3>Rubralan B12 5000</h3>  
+                <p style="color:var(--accent); font-weight:bold; font-size:1.4rem; margin:12px 0;">R$ 42,90</p>  
+                <button class="btn-signup" style="width:100%;" onclick="openModal('loginModal')">Ver detalhes</button>  
+            </div>  
+        </div>  
+    </div>  
+</div>
+        <div class="user-header">  
+            <div class="cart-icon" onclick="toggleCart()">🛒 <span class="cart-count" id="cartCount">0</span></div>  
+            <div style="text-align:right;">  
+                <p id="userName" style="font-weight:bold;">Usuário</p>
+                <p style="font-size:0.85rem; color:#666;">Fazenda Estância Verde</p>  
+            </div>  
+            <div style="width:48px; height:48px; background:var(--secondary); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--primary);">JS</div>  
+        </div>  
+
+    <!-- TABS (fica acima de tudo) -->
+<div class="tabs">
+    <button class="tab-btn active" onclick="showContent('catalogContent', this)">📦 Catálogo</button>
+    <button class="tab-btn" onclick="showContent('dosageAssistantView', this)">💊 Dosagem</button>
+</div>
+
+<!-- CATÁLOGO -->
+<div id="catalogContent" class="content-section active">
+    <h2>Catálogo de Medicamentos</h2>
+            <div class="catalog-grid">  
+                <div class="pro-card">  
+                    <div class="img-placeholder">💉</div>  
+                    <h4>Banamine</h4>  
+                    <p class="product-description">Anti-inflamatório não esteroide – alívio rápido da dor e febre.</p>  
+                    <div style="color:var(--accent); font-weight:bold; font-size:1.2rem; margin:10px 0;">R$ 125,70</div>  
+                    <button class="btn-signup" onclick="addToCart('Banamine', 125.70)">Adicionar ao Carrinho</button>  
+                </div>  
+
+                <div class="pro-card">  
+                    <div class="img-placeholder">💊</div>  
+                    <h4>Rubralan B12 5000</h4>  
+                    <p class="product-description">Suplemento vitamínico injetável – alta concentração de B12.</p>  
+                    <div style="color:var(--accent); font-weight:bold; font-size:1.2rem; margin:10px 0;">R$ 42,90</div>  
+                    <button class="btn-signup" onclick="addToCart('Rubralan B12 5000', 42.90)">Adicionar ao Carrinho</button>  
+                </div>  
+
+                <div class="pro-card">  
+                    <div class="img-placeholder">🧴</div>  
+                    <h4>Ivermectina 1%</h4>  
+                    <p class="product-description">Vermífugo de amplo espectro para bovinos e equinos.</p>  
+                    <div style="color:var(--accent); font-weight:bold; font-size:1.2rem; margin:10px 0;">R$ 88,00</div>  
+                    <button class="btn-signup" onclick="addToCart('Ivermectina 1%', 88.00)">Adicionar ao Carrinho</button>  
+                </div>  
